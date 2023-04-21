@@ -33,3 +33,37 @@
         
   - Kết quả là nó vẫn trả về lỗi.  
 
+![image](https://user-images.githubusercontent.com/125866921/233626499-cd4a4037-020b-4b23-b678-904d1b8165a9.png)
+
+        '||(SELECT '' FROM users WHERE ROWNUM = 1)||'
+        
+  - Tiếp theo ta thử với câu lệnh truy vấn trên.  
+  - Dùng một chuỗi rỗng từ bảng users với điều kiện ``ROWNUM`` bằng ``1``. ``ROWNUM`` là một cột giả của Oracle dùng để đánh số thứ tự cho các bản ghi trả về.  Kết quả không trả về lỗi chứng tỏ chúng ta không thể khai thác bằng cách này.  
+
+![image](https://user-images.githubusercontent.com/125866921/233629056-6e83fe16-ca04-49df-9880-e2a7646e59b0.png)
+
+        '||(SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM dual)||'
+        
+  - Tiếp theo sử dụng hàm ``CASE`` để kiểm tra điều kiện ``(1=1)``. Vì điều kiện này luôn đúng, truy vấn con sẽ trả về kết quả của hàm ``TO_CHAR(1/0)``, tức là lỗi **division by zero (chia cho số không)**.  
+  - Ta chỉnh sửa hàm ``CASE`` thành điều kiện ``(1=2)``. Thì kết quả không còn trả về lỗi nữa.  
+
+![image](https://user-images.githubusercontent.com/125866921/233634253-3436aec7-5b73-420e-a02d-09c8214c7430.png)
+
+        '||(SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator')||'
+        
+  - Ta sử dụng câu truy vấn trên để check xem có ``username`` nào là ``administrator`` không.  
+  - Kết quả trả về lỗi do đó chứng tỏ có tồn tại 1 tài khoản là ``administrator``.  
+  - Ta đã tìm được tài khoản, việc tìm theo ta cần làm là tìm mật khẩu để đăng nhập vào cửa hàng.  
+
+![image](https://user-images.githubusercontent.com/125866921/233635477-600a244a-613a-4629-9e6a-ab99792ebbb5.png)
+
+        '||(SELECT CASE WHEN LENGTH(password)>1 THEN to_char(1/0) ELSE '' END FROM users WHERE username='administrator')||'
+        
+  - Ta sử dụng lệnh truy vấn để check xem độ dài của mật khẩu có bao nhiêu kí tự.  
+  - Ở đây khi ta thấy kết quả trả về lỗi, nhưng khi tăng độ dài của mật khẩu đến ``>20`` thì lại không trả về lỗi nữa. Điều đó cho ta biết rằng chiều dài của mật khẩu có 20 kí tự là tối đa.  
+
+![image](https://user-images.githubusercontent.com/125866921/233637126-e709e6f1-6644-4a61-b257-993929ba6574.png)
+
+  - Bước cuối cùng, ta ``send to intruder`` sau đó với câu lệnh truy vấn là ``'||(SELECT CASE WHEN SUBSTR(password,1,1)='§a§' THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator')||'``.  
+  - Ở phần ``payloads`` ta sử dụng ``BruteForce``. Sau đó ``Start attack`` và thay đổi dần vị trí của các kí tự trong chuỗi mật khẩu.  
+  - Sau khi hoàn thành BruteForce 20 kí tự mật khẩu thì ta chỉ việc đăng nhập và hoàn thành lab.  
